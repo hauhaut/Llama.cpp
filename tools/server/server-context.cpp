@@ -1003,7 +1003,12 @@ struct server_context_impl {
                 return false;
             }
 
-            llama_set_sampler(ctx, slot.id, common_sampler_get(slot.smpl.get()));
+            // TODO: tmp until backend sampling is fully implemented
+            if (task.params.sampling.backend_sampling) {
+                llama_set_sampler(ctx, slot.id, common_sampler_get(slot.smpl.get()));
+            } else {
+                llama_set_sampler(ctx, slot.id, nullptr);
+            }
 
             SLT_INF(slot, "sampler chain: %s\n", common_sampler_print(slot.smpl.get()).c_str());
         }

@@ -2109,10 +2109,10 @@ void llm_graph_context::build_sampling() const {
             ggml_build_forward_expand(gf, data.probs);
         }
 
-        if (data.logits != logits_seq) {
+        if (data.logits != nullptr) {
             ggml_set_output(data.logits);
             res->t_sampled_logits[seq_id] = data.logits;
-            ggml_build_forward_expand(gf, res->t_sampled_logits[seq_id]);
+            ggml_build_forward_expand(gf, data.logits);
         }
 
         if (data.candidates != nullptr) {
